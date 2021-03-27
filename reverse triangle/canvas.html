@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Basic</title>
+  <style>
+    html, body{
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="500" height="500" style="border:1px solid #c3c3c3;">
+  </canvas>
+    
+  <script>
+    var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    ctx.fillStyle="#FF0000"; // fillStyle 属性设置或返回用于填充绘画的颜色、渐变或模式
+    ctx.fillRect(100,75,150,75); // fillRect() 方法绘制“已填色”的矩形。默认的填充颜色是黑色。
+    // // context.fillRect(x,y,width,height);
+
+    //对于canvas路径 moveTo(x,y) LineTo(x, y)
+    ctx.moveTo(0,0);
+    ctx.lineTo(400, 400);
+    ctx.stroke(); //一笔，一击，轻抚
+
+    //arc(x, y, r, startAngle, endAngle, anticlockwise): 以(x, y) 为圆心，以r 为半径，从 startAngle 弧度开始到endAngle弧度结束。anticlosewise 是布尔值，true 表示逆时针，false 表示顺时针(默认是顺时针)。
+    ctx.beginPath(); // 新建一条路径，路径一旦创建成功，图形绘制命令被指向到路径上生成路径
+    ctx.arc(100,100,50,0,-Math.PI/2,true)
+    ctx.stroke(); //通过线条来绘制图形轮廓
+
+    //文字
+    ctx.font="30px Arial";
+    ctx.fillText("Hello World",300,50);  
+    ctx.strokeText("Hello World",10,50);
+
+    // 创建渐变
+    var grd=ctx.createLinearGradient(0,0,400,400);
+    grd.addColorStop(0,"green");
+    grd.addColorStop(1,"white");
+    
+    // 填充渐变
+    ctx.fillStyle=grd;
+    ctx.fillRect(200,200,150,80); 
+  </script>
+
+</body>
+</html>

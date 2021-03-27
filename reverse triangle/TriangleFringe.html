@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>reverse triangle</title>
+</head>
+<body>
+  <canvas></canvas>
+  <script>
+    console.log(window.innerWidth)
+    console.log(window.outerWidth)
+    document.addEventListener('touchmove',function(e) {
+      e.preventDefault()
+    }) // 对于移动端移动，阻止默认效果
+    // 初始化canvas
+    var c = document.getElementsByTagName('canvas')[0],
+        x = c.getContext('2d'),
+        // 设备像素比
+        pr = window.devicePixelRatio || 1,
+        // The read-only Window property innerWidth 
+        // returns the interior width of the window in pixels. 
+        // This includes the width of the vertical scroll bar,
+        //  if one is present 可视宽度content + padding
+        w = window.innerWidth,
+        h = window.innerHeight,
+        f = 90,
+        q,
+        m = Math,
+        r = 0,
+        u = m.PI*2,
+        v = m.cos,
+        z = m.random
+      //设置canvas高度宽度
+      c.width = w*pr
+      c.height = h*pr
+      // scale方法缩放当前绘图至更大或更小
+      x.scale(pr, pr)
+      // globalAlpha返回绘图当前的透明度
+      x.globalAlpha = 0.6
+      function i(){
+        // 清空之前绘制的三角形
+        x.clearRect(0,0,w,h)
+        // 取三角形的两个点,q1,q2,q2要比q1靠上面 
+        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+        // 只要三角形的q1的宽度小于可视宽度就一直生成三角形
+        while(q[1].x<w+f) d(q[0], q[1])
+      }
+      // 获取第三点的函数
+      function d(i,j){
+          // 获取第三点   
+          x.beginPath()
+          x.moveTo(i.x, i.y)
+          x.lineTo(j.x, j.y)
+          // 第三点的x和y
+          var k = j.x + (z()*2-0.25)*f,
+              n = y(j.y)
+          x.lineTo(k, n)
+          x.closePath()
+          r-=u/-50
+          // number.toString(radix) 16 - 数字以十六进制值显示
+          x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+          x.fill() // fill() 方法填充当前的图像（路径）。默认颜色是黑色。使用fillStyle来改变颜色
+          q[0] = q[1]
+          q[1] = {x:k,y:n}
+      }
+      // 获取第三点的y
+      function y(p){
+          var t = p + (z()*2-1.1)*f
+          // 三角形的高度也不能超出可视宽度
+          return (t>h||t<0) ? y(p) : t
+      }
+      document.onclick = i
+      // 移动端
+      document.ontouchstart = i
+      i()
+  </script>
+</body>
+</html>
