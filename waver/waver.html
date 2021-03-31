@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waver</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      /* 常见居中1 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(71, 69, 233);
+      overflow: hidden;
+    }
+    /* 注意css书写的样式顺序 */
+    .container {
+      height: 230px;
+      width: 230px;
+      position: relative;
+    }
+    .container>div {
+      height: 230px;
+      width: 230px;
+      position: absolute;
+    }
+    .center {
+      cursor: pointer;
+    }
+    .center>img {
+      /* 常见居中2 */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* 圆的waver操作来了 */
+    .circle {
+      border: 1px solid rgb(243, 155, 55);
+      border-radius: 50%;
+      opacity: 0;
+    }
+    .circle.waver {
+      animation: waver 3s linear infinite;
+    }
+    @keyframes waver {
+      0% {
+        transform: scale(1, 1);
+        opacity: 0.4;
+      }
+      100% {
+        transform: scale(4, 4);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="center">
+      <img src="spain.png" alt="Spainese Badge" />
+    </div>
+  </div>
+  <script>
+    // animation必须要设定一个触发事件，transition是不需要的
+    // querySelectorAll('')寻找所有相同元素，返回一个NodeList
+    // classList.add( newClassName )；添加新的类名，如已经存在，取消添加
+    document.querySelector('.center').onclick = function() {
+      var circle = document.querySelectorAll('.circle')
+      for(var i = 0; i < circle.length; i++) {
+        circle[i].style.animationDelay = i * 0.6 + 's'
+        circle[i].classList.add('waver')
+      }
+    }
+  </script>
+</body>
+</html>
